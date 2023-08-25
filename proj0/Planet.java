@@ -20,7 +20,7 @@ public class Planet {
 	}
 	public Planet(Planet p) {
 		xxPos = p.xxPos;
-		yyPos = p.yyVel;
+		yyPos = p.yyPos;
 		xxVel = p.xxVel;
 		yyVel = p.yyVel;
 		mass = p.mass;

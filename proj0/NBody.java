@@ -7,10 +7,11 @@ public class NBody {
 
     public static Planet[] readPlanets(String filename) {
         In in = new In(filename);
-        Planet[] planets = new Planet[in.readInt()];
+        int numPlanet = in.readInt();
+        Planet[] planets = new Planet[numPlanet];
         in.readDouble();
         int i = 0;
-        while (i < 5) {
+        while (i < numPlanet) {
             planets[i] = new Planet(
                     in.readDouble(),
                     in.readDouble(),

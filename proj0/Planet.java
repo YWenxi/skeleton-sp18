@@ -50,6 +50,30 @@ public class Planet {
 		return F * dy / calcDistance(p);
 	}
 
+	public double calcNetForceExertedByX(Planet[] allPlanets)
+	{
+		double totalForce = 0;
+		for (Planet planet : allPlanets) {
+			if (this.equals(planet)) {
+				continue;
+			}
+			totalForce += calcForceExertedByX(planet);
+		}
+		return totalForce;
+	}
+
+	public double calcNetForceExertedByY(Planet[] allPlanets)
+	{
+		double totalForce = 0;
+		for (Planet planet : allPlanets) {
+			if (this.equals(planet)) {
+				continue;
+			}
+			totalForce += calcForceExertedByY(planet);
+		}
+		return totalForce;
+	}
+
 	public void update(double dt, double Fx, double Fy) {
 		double ax = Fx / mass;
 		double ay = Fy / mass;
@@ -59,5 +83,9 @@ public class Planet {
 
 		xxPos = xxPos + xxVel * dt;
 		yyPos = yyPos + yyVel * dt;
+	}
+
+	public void draw() {
+		StdDraw.picture(xxPos, yyPos, "images/"+imgFileName);
 	}
 }

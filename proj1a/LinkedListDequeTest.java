@@ -82,9 +82,25 @@ public class LinkedListDequeTest {
 
 	}
 
+	public static void checkRemoveFirst() {
+
+		System.out.println("Check removeFirst.");
+		LinkedListDeque<Integer> lld = new LinkedListDeque<>();
+
+		lld.addLast(0);
+		lld.addLast(1);
+		lld.addLast(2);
+		lld.addLast(3);
+		lld.addLast(4);
+
+		System.out.println(lld.getRecursive(3));
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
 		addIsEmptySizeTest();
 		addRemoveTest();
+
+		checkRemoveFirst();
 	}
 } 

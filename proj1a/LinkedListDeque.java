@@ -2,10 +2,10 @@ public class LinkedListDeque<T> {
     private Node sentinel;
     private int size;
 
-    public class Node {
-        public T item;
-        public Node next;
-        public Node prev;
+    private class Node {
+        private T item;
+        private Node next;
+        private Node prev;
 
         Node() {
             item = null;
@@ -21,7 +21,7 @@ public class LinkedListDeque<T> {
     }
 
     /* Constructor */
-    LinkedListDeque() {
+    public LinkedListDeque() {
         size = 0;
         sentinel = new Node();
         sentinel.next = sentinel;
@@ -33,9 +33,9 @@ public class LinkedListDeque<T> {
      * @param item to be added
      */
     public void addFirst(T item) {
-        Node NewNode = new Node(item, sentinel, sentinel.next);
-        sentinel.next.prev = NewNode;
-        sentinel.next = NewNode;
+        Node newNode = new Node(item, sentinel.next, sentinel.prev);
+        sentinel.next.prev = newNode;
+        sentinel.next = newNode;
         size += 1;
     }
 
@@ -44,9 +44,9 @@ public class LinkedListDeque<T> {
      * @param item to be added
      */
     public void addLast(T item) {
-        Node NewNode = new Node(item, sentinel.prev, sentinel);
-        sentinel.prev.next = NewNode;
-        sentinel.prev = NewNode;
+        Node newNode = new Node(item, sentinel, sentinel.prev);
+        sentinel.prev.next = newNode;
+        sentinel.prev = newNode;
         size += 1;
     }
 
@@ -111,14 +111,19 @@ public class LinkedListDeque<T> {
         return current.item;
     }
 
+    private T getRecursive(int index, Node start) {
+        if (index == 0) {
+            return start.item;
+        } else {
+            return getRecursive(index - 1, start.next);
+        }
+    }
+
     public T getRecursive(int index) {
         if (index < 0 || index >= size) {
             return null;
         }
-        if (index == 0) {
-            return sentinel.next.item;
-        } else {
-            return getRecursive(index - 1);
-        }
+
+        return getRecursive(index, sentinel.next);
     }
 }

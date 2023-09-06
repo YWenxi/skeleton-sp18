@@ -47,22 +47,22 @@ public class ArrayDeque<T> {
         T[] newArray = (T[]) new Object[length * 2];
 
         // iterator to read elements
-        int read_ptr = first;
+        int readPtr = first;
         // iterator to write elements
-        int write_ptr = length;
+        int writePtr = length;
 
         // write the newArray
-        while (read_ptr != next) {
-            newArray[write_ptr] = array[read_ptr];
-            read_ptr = indexPlusOne(read_ptr, length);
-            write_ptr = indexPlusOne(write_ptr, length*2);
+        while (readPtr != next) {
+            newArray[writePtr] = array[readPtr];
+            readPtr = indexPlusOne(readPtr, length);
+            writePtr = indexPlusOne(writePtr, length * 2);
         }
 
         // update attributes
         array = newArray;
         length = 2 * length;
         first = length;
-        next = write_ptr;
+        next = writePtr;
     }
 
     /** Shrink the array by the factor 2 */
@@ -73,24 +73,24 @@ public class ArrayDeque<T> {
         }
 
         // iterators/ptr to read and write
-        int read_ptr = first;
-        int write_ptr = length / 4;
+        int readPtr = first;
+        int writePtr = length / 4;
 
         // newArray with half-length
         T[] newArray = (T[]) new Object[length / 2];
 
         // write the new array;
-        while (read_ptr != next) {
-            newArray[write_ptr] = array[read_ptr];
-            read_ptr = indexPlusOne(read_ptr, length);
-            write_ptr = indexPlusOne(write_ptr, length/2);
+        while (readPtr != next) {
+            newArray[writePtr] = array[readPtr];
+            readPtr = indexPlusOne(readPtr, length);
+            writePtr = indexPlusOne(writePtr, length / 2);
         }
 
         // update attributes
         array = newArray;
         length = length / 2;
         first = length / 4;
-        next = write_ptr;
+        next = writePtr;
     }
 
     /** Check if the Deque is empty */
@@ -145,12 +145,12 @@ public class ArrayDeque<T> {
         }
 
         // get the item iteratively
-        int read_ptr = first;
+        int readPtr = first;
         while (index != 0) {
             index -= 1;
-            read_ptr = indexPlusOne(read_ptr, length);
+            readPtr = indexPlusOne(readPtr, length);
         }
-        return array[read_ptr];
+        return array[readPtr];
     }
 
     /** Print the deque */
@@ -164,7 +164,9 @@ public class ArrayDeque<T> {
     /** Pop out the first item. */
     public T removeFirst() {
         // if no such item, return null
-        if (size == 0) { return null; }
+        if (size == 0) {
+            return null;
+        }
 
         // pop out the first item
         T out = array[first];

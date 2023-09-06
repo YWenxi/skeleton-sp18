@@ -185,7 +185,9 @@ public class ArrayDeque<T> {
     /** Pop out the last item */
     public T removeLast() {
         // if no such item, return null;
-        if (size == length) { return null; }
+        if (size == length) {
+            return null;
+        }
 
         // move ptr, pop out the last
         next = indexMinusOne(next, length);

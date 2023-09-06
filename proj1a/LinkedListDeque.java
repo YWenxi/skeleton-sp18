@@ -33,7 +33,7 @@ public class LinkedListDeque<T> {
      * @param item to be added
      */
     public void addFirst(T item) {
-        Node newNode = new Node(item, sentinel.next, sentinel.prev);
+        Node newNode = new Node(item, sentinel.next, sentinel);
         sentinel.next.prev = newNode;
         sentinel.next = newNode;
         size += 1;

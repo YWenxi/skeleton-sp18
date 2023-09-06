@@ -90,10 +90,13 @@ public class LinkedListDequeTest {
 		lld.addLast(0);
 		lld.addLast(1);
 		lld.addLast(2);
+		lld.addFirst(-1);
 		lld.addLast(3);
-		lld.addLast(4);
 
-		System.out.println(lld.getRecursive(3));
+		System.out.println(lld.get(0));
+
+		System.out.println(lld.removeLast());
+		System.out.println(lld.removeLast());
 	}
 
 	public static void main(String[] args) {

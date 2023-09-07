@@ -21,7 +21,7 @@ public class ArrayDeque<T> {
      * @param index index to be moved
      * @return the front index
      */
-    private int indexMinusOne(int index, int module) {
+    private int indexMinus(int index, int module) {
         if (index == 0) {
             return module - 1;
         }
@@ -31,14 +31,22 @@ public class ArrayDeque<T> {
     /** move the index to the next one
      *
      * @param index index to be moved
+     * @param module length of array
      * @return the next index
      */
-    private int indexPlusOne(int index, int module) {
-        if (index == length) {
-            return 0;
-        }
+    private int indexPlus(int index, int module) {
+        return (index + 1) % module;
+    }
 
-        return index % module;
+    /** move the index to the
+     *
+     * @param index index to be moved
+     * @param module length of the array
+     * @param step steps to move forward
+     * @return the next index
+     */
+    private int indexPlus(int index, int module, int step) {
+        return (index + step) % module;
     }
 
     /** resize the array by factor 2 */
@@ -52,16 +60,16 @@ public class ArrayDeque<T> {
         int writePtr = length;
 
         // write the newArray
-        while (readPtr != next) {
+        for (int i = 0; i < size; i += 1) {
             newArray[writePtr] = array[readPtr];
-            readPtr = indexPlusOne(readPtr, length);
-            writePtr = indexPlusOne(writePtr, length * 2);
+            readPtr = indexPlus(readPtr, length);
+            writePtr = indexPlus(writePtr, length * 2);
         }
 
         // update attributes
         array = newArray;
-        length = 2 * length;
         first = length;
+        length = 2 * length;
         next = writePtr;
     }
 
@@ -82,14 +90,14 @@ public class ArrayDeque<T> {
         // write the new array;
         while (readPtr != next) {
             newArray[writePtr] = array[readPtr];
-            readPtr = indexPlusOne(readPtr, length);
-            writePtr = indexPlusOne(writePtr, length / 2);
+            readPtr = indexPlus(readPtr, length);
+            writePtr = indexPlus(writePtr, length / 2);
         }
 
         // update attributes
         array = newArray;
         length = length / 2;
-        first = length / 4;
+        first = length / 2;
         next = writePtr;
     }
 
@@ -113,7 +121,7 @@ public class ArrayDeque<T> {
         }
 
         // add the item and move the first pointer
-        first = indexMinusOne(first, length);
+        first = indexMinus(first, length);
         array[first] = item;
         size += 1;
     }
@@ -129,7 +137,7 @@ public class ArrayDeque<T> {
 
         // add, move, and update
         array[next] = item;
-        next = indexPlusOne(next, length);
+        next = indexPlus(next, length);
         size += 1;
     }
 
@@ -144,12 +152,8 @@ public class ArrayDeque<T> {
             return null;
         }
 
-        // get the item iteratively
-        int readPtr = first;
-        while (index != 0) {
-            index -= 1;
-            readPtr = indexPlusOne(readPtr, length);
-        }
+        // get the item directly
+        int readPtr = indexPlus(first, length, index);
         return array[readPtr];
     }
 
@@ -173,7 +177,7 @@ public class ArrayDeque<T> {
         array[first] = null;
 
         // update the attributes
-        first = indexPlusOne(first, length);
+        first = indexPlus(first, length);
         size -= 1;
 
         // shrink if necessary
@@ -190,7 +194,7 @@ public class ArrayDeque<T> {
         }
 
         // move ptr, pop out the last
-        next = indexMinusOne(next, length);
+        next = indexMinus(next, length);
         T out = array[next];
         array[next] = null;
 

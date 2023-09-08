@@ -189,7 +189,7 @@ public class ArrayDeque<T> {
     /** Pop out the last item */
     public T removeLast() {
         // if no such item, return null;
-        if (size == length) {
+        if (size == 0) {
             return null;
         }
 

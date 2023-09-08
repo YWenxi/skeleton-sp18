@@ -76,7 +76,7 @@ public class ArrayDeque<T> {
     /** Shrink the array by the factor 2 */
     private void shrink() {
         // check size is less than half of length
-        if (size > length / 2) {
+        if (size > length / 2 || length <= 8) {
             return;
         }
 

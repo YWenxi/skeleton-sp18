@@ -7,28 +7,68 @@ public class Palindrome {
         return wordDeque;
     }
 
+    /** Private helper function to check if a word deque is a palindrome.
+     * @param word to check
+     * @return true if it is a palindrome
+     */
+    private boolean isPalindrome(Deque<Character> word) {
+        // check basic scenario
+        if (word.isEmpty()) {
+            return true;
+        }
+        if (word.size() == 1) {
+            return true;
+        }
+
+        Character first = word.removeFirst();
+        Character last = word.removeLast();
+        if (first != last) {
+            return false;
+        } else {
+            return isPalindrome(word);
+        }
+    }
+
     /** Check if the word is a palindrome
      *
-     * @param word
-     * @return ture if it is
+     * @param word to check
+     * @return true if it is
      */
     public boolean isPalindrome(String word) {
         Deque<Character> candidate = wordToDeque(word);
 
-        // trivial case
-        if (candidate.isEmpty()) {
+        return isPalindrome(candidate);
+    }
+
+    /** General palindrome checker
+     *
+     * @param word to check
+     * @param cc a general character comparator
+     * @return true if it is
+     */
+    public boolean isPalindrome(String word, CharacterComparator cc) {
+        Deque<Character> candidate = wordToDeque(word);
+
+        return isPalindrome(candidate, cc);
+    }
+
+    /** General helper function for palindrome checker
+     *
+     * @param word to check
+     * @param cc general comparator
+     * @return true if it is
+     */
+    private boolean isPalindrome(Deque<Character> word, CharacterComparator cc) {
+        if (word.isEmpty() || word.size() == 1) {
             return true;
         }
 
-        // iterate
-        int size = candidate.size();
-        for (int i = 0; i < size; i++) {
-            Character cHead = candidate.get(i);
-            Character cTail = candidate.get(size - i - 1);
-            if (cHead != cTail) {
-                return false;
-            }
+        Character first = word.removeFirst();
+        Character last = word.removeLast();
+        if (!cc.equalChars(first, last)) {
+            return false;
+        } else {
+            return isPalindrome(word, cc);
         }
-        return true;
     }
 }

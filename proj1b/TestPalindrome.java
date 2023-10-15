@@ -14,6 +14,8 @@ public class TestPalindrome {
             actual += d.removeFirst();
         }
         assertEquals("persiflage", actual);
+
+
     }
 
     @Test
@@ -24,7 +26,11 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("racecar"));
         assertTrue(palindrome.isPalindrome("noon"));
 
-        assertFalse(palindrome.isPalindrome("aaaaab"));
+        assertFalse(palindrome.isPalindrome("car"));
         assertFalse(palindrome.isPalindrome("horse"));
+
+        CharacterComparator offByOne = new OffByOne();
+
+        assertTrue(palindrome.isPalindrome("flake", offByOne));
     }
 }

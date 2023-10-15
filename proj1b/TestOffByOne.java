@@ -9,4 +9,22 @@ public class TestOffByOne {
 
     // Your tests go here.
     Uncomment this class once you've created your CharacterComparator interface and OffByOne class. **/
+
+    // use the CharacterComparator
+    static CharacterComparator offByOne = new OffByOne();
+
+    @Test
+    public void testEqualChars() {
+        assertTrue(offByOne.equalChars('a', 'b'));
+        assertTrue(offByOne.equalChars('r', 'q'));
+
+        assertFalse(offByOne.equalChars('a', 'c'));
+        assertFalse(offByOne.equalChars('z', 'a'));
+        assertFalse(offByOne.equalChars('a', 'a'));
+    }
+
+//    @Test
+//    public void testIsPalindrome() {
+//
+//    }
 }

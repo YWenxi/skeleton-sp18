@@ -31,7 +31,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * covered Monday.
      */
     public void enqueue(T x) {
-        if(this.isFull()) {
+        if (this.isFull()) {
             throw new RuntimeException("Ring Buffer Overflow");
         }
 

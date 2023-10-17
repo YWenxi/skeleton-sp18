@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 //TODO: Make sure to make this class and all of its methods public
 //TODO: Make sure to make this class extend AbstractBoundedQueue<t>
-public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
+public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Iterable<T> {
     /* Index for the next dequeue or peek. */
     private int first;            // index for the next dequeue or peek
     /* Index for the next enqueue. */
@@ -82,18 +82,20 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
 
     private class ArrayRingBufferIterator implements Iterator<T> {
         private int wizPos;
+        private int left = fillCount;
 
         public ArrayRingBufferIterator() {
             wizPos = 0;
         }
 
         public boolean hasNext() {
-            return wizPos < fillCount;
+            return left > 0;
         }
 
         public T next() {
             T returnItem = rb[wizPos];
             wizPos = forwardIndex(wizPos);
+            left -= 1;
             return returnItem;
         }
     }

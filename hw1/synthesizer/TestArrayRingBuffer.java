@@ -17,6 +17,7 @@ public class TestArrayRingBuffer {
         }
 
         int currentSize = 10;
+
         for (int i = 0; i < 5; i++) {
             assertEquals("Dequeue Check", arb.dequeue(), (Integer) i);
             currentSize -= 1;

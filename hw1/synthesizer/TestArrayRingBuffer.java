@@ -16,12 +16,24 @@ public class TestArrayRingBuffer {
             assertEquals("Size Check", i + 1, arb.fillCount());
         }
 
+        try {
+            arb.enqueue(10);
+        } catch (RuntimeException e) {
+            System.out.println("Caught: " + e);
+        }
+
         int currentSize = 10;
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             assertEquals("Dequeue Check", arb.dequeue(), (Integer) i);
             currentSize -= 1;
             assertEquals("Size Check", currentSize, arb.fillCount());
+        }
+
+        try {
+            arb.dequeue();
+        } catch (RuntimeException e) {
+            System.out.println("Caught: " + e);
         }
     }
 

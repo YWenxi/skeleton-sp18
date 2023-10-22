@@ -104,9 +104,15 @@ public class Game {
     /** add a row from start to end (included) */
     private static void addRow(TETile[][] worldFrame, Position start, Position end, TETile t) {
         if (start.y != end.y) {
-            throw new IllegalArgumentException("Not in the same row! %s and %s".formatted(start, end));
+            throw new IllegalArgumentException(
+                    "Not in the same row! %s and %s".formatted(start, end)
+            );
         }
-        addRow(worldFrame, new Position(Math.min(start.x, end.x), start.y), Math.abs(end.x - start.x) + 1, t);
+        addRow(worldFrame, new Position(
+                Math.min(start.x, end.x), start.y),
+                Math.abs(end.x - start.x) + 1,
+                t
+        );
     }
 
     /** add a column of some tiles to the world
@@ -127,9 +133,15 @@ public class Game {
     /** add a column from start to end (included) */
     private static void addCol(TETile[][] worldFrame, Position start, Position end, TETile t) {
         if (start.x != end.x) {
-            throw new IllegalArgumentException("Not in the same column, i.e. x-index! %s and %s".formatted(start, end));
+            throw new IllegalArgumentException(
+                    "Not in the same column, i.e. x-index! %s and %s".formatted(start, end));
         }
-        addCol(worldFrame, new Position(start.x, Math.min(start.y, end.y)), Math.abs(end.y - start.y) + 1, t);
+        addCol(
+                worldFrame,
+                new Position(start.x, Math.min(start.y, end.y)),
+                Math.abs(end.y - start.y) + 1,
+                t
+        );
     }
 
     /** check if the position is valid in the current worldFrame */
@@ -267,7 +279,9 @@ public class Game {
                 throw new IllegalArgumentException("No empty space inside the room.");
             }
             if (validPosition(bl) || validPosition(new Position(ur.x - 1, ur.y - 1))) {
-                throw new IllegalArgumentException("Positions are not inside the world. %s and %s".formatted(bl, ur));
+                throw new IllegalArgumentException(
+                        "Positions are not inside the world. %s and %s".formatted(bl, ur)
+                );
             }
             // update the world frame
             // inner space: FLOOR
@@ -283,5 +297,32 @@ public class Game {
                     RandomUtils.uniform(RANDOM, bl.y, ur.y)
             );
         }
+    }
+    private static class Position implements Comparable<Position> {
+        int x;
+        int y;
+
+        Position(int xCoord, int yCoord) {
+            x = xCoord;
+            y = yCoord;
+        }
+
+        @Override
+        public String toString() {
+            return "(" + x + ", " + y + ")";
+        }
+
+        @Override
+        public int compareTo(Position p) {
+            int flag = -1;
+            if (x <= p.x && y <= p.y) {
+                flag = 1;
+            }
+            if (x == p.x && y == p.y) {
+                flag = 0;
+            }
+            return flag;
+        }
+
     }
 }

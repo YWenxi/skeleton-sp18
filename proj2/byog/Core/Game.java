@@ -104,9 +104,8 @@ public class Game {
     /** add a row from start to end (included) */
     private static void addRow(TETile[][] worldFrame, Position start, Position end, TETile t) {
         if (start.y != end.y) {
-            throw new IllegalArgumentException(
-                    "Not in the same row! %s and %s".formatted(start, end)
-            );
+            throw new IllegalArgumentException("Not in the same row, i.e. y-index! "
+                    + start + ", " + end);
         }
         addRow(worldFrame, new Position(
                 Math.min(start.x, end.x), start.y),
@@ -133,8 +132,8 @@ public class Game {
     /** add a column from start to end (included) */
     private static void addCol(TETile[][] worldFrame, Position start, Position end, TETile t) {
         if (start.x != end.x) {
-            throw new IllegalArgumentException(
-                    "Not in the same column, i.e. x-index! %s and %s".formatted(start, end));
+            throw new IllegalArgumentException("Not in the same column, i.e. x-index! "
+                    + start + ", " + end);
         }
         addCol(
                 worldFrame,
@@ -279,9 +278,8 @@ public class Game {
                 throw new IllegalArgumentException("No empty space inside the room.");
             }
             if (validPosition(bl) || validPosition(new Position(ur.x - 1, ur.y - 1))) {
-                throw new IllegalArgumentException(
-                        "Positions are not inside the world. %s and %s".formatted(bl, ur)
-                );
+                throw new IllegalArgumentException("Positions are not inside the world. " +
+                        "bl and ur: " + bl + ur);
             }
             // update the world frame
             // inner space: FLOOR

@@ -64,7 +64,7 @@ public class MemoryGameSolution {
                 gameOver = true;
                 drawFrame("Game Over! Final level: " + round);
             } else {
-                drawFrame("Correct, well done!");
+                drawFrame( "Correct, well done!");
                 StdDraw.pause(1500);
                 round += 1;
             }

@@ -2,9 +2,11 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
-
 import byog.TileEngine.Tileset;
 
+import edu.princeton.cs.introcs.StdDraw;
+
+import java.awt.*;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -16,11 +18,53 @@ public class Game {
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
+    private static boolean gameOver;
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
+        gameOver = false;
+
+        // init menu gui
+        StdDraw.clear(new Color(0, 0, 0));
+        StdDraw.setPenRadius(2);
+        StdDraw.setPenColor(StdDraw.WHITE);
+        Font titleFont = new Font("Arial", Font.BOLD, 30);
+        StdDraw.text(0.5, 0.5, "(N) New Game");
+        StdDraw.text(0.5, 0.45, "(L) Load Game");
+        StdDraw.text(0.5, 0.4, "(Q) Quit");
+        StdDraw.setFont(titleFont);
+        StdDraw.text(0.5, 0.8, "CS61B New Game");
+
+        // get the start key
+        char startKey = ' ';
+        while (!gameOver) {
+            if (!StdDraw.hasNextKeyTyped()) {
+                continue;
+            }
+            startKey = Character.toLowerCase(StdDraw.nextKeyTyped());
+            if (startKey == 'q') {
+                gameOver = true;
+            } else if (startKey == 'l') {
+                gameOver = false;
+            } else if (startKey == 'n') {
+                gameOver = false;
+            }
+            break;
+        }
+
+        if (gameOver) {
+            return;
+        } else {
+            StdDraw.text(0.1, 0.5, "INPUT SEED!!!");
+            long seed = getRandomSeedFromKeyboard();
+            TETile[][] finalWorldFrame = initWorld();
+            ter.initialize(WIDTH, HEIGHT);
+            getRandomRooms(finalWorldFrame, seed);
+            ter.renderFrame(finalWorldFrame);
+        }
+
     }
 
     /**
@@ -73,6 +117,25 @@ public class Game {
         }
 
         return finalWorldFrame;
+    }
+
+    private long getRandomSeedFromKeyboard() {
+        StringBuilder seed = new StringBuilder();
+        boolean endOfSeed = false;
+
+        while (!endOfSeed) {
+            if (!StdDraw.hasNextKeyTyped()) {
+                continue;
+            }
+            char key = StdDraw.nextKeyTyped();
+            if (key == 's') {
+                endOfSeed = true;
+                continue;
+            }
+            seed.append(key);
+        }
+
+        return Long.parseLong(seed.toString());
     }
 
     /** initialize the empty world. Each element in the array is set to `Tileset.NOTHING` */
